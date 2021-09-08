@@ -1,0 +1,216 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Minha garagem {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+
+
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <form id='searchForm' method="get" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            <div class="form-group mb-0">
+                <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
+                        <input class="form-control" placeholder="Procurar veículo" type="text" id="formInput#search" name="search_query" value="{{search_query}}">
+                </div>
+            </div>
+          </form>
+          <br>
+          <div class="card shadow">
+           <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Veículos</h3>
+                </div>
+                  <div class="col-4 text-right">
+                    <div>
+                      <a href="{% url 'criar-veiculo' %}" class="btn btn-sm btn-primary">Cadastrar veículo</a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Tipo de veículo</th>
+                    <th scope="col">Cor</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Ano</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Proprietário</th>
+                    <th scope="col">Data de cadastro</th>
+                    <th scope="col">Última atualização</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for veiculo in veiculos %}
+                    <tr>
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <a href="#" class="avatar rounded-circle mr-3">
+
+                            {% if veiculo.tipo == 'carro' %}
+
+                            <img alt="Image placeholder" src="/static/assets/img/theme/carro.png">
+
+                            {% else %}
+
+                            <img alt="Image placeholder" src="/static/assets/img/theme/moto.png">
+
+                            {% endif %}
+
+                          </a>
+                          <div class="media-body">
+                            <span class="mb-0 text-sm">{{ veiculo.tipo|capfirst  }}</span>
+                          </div>
+                        </div>
+                      </th>
+
+                      <td>
+                        <span class="badge badge-dot mr-4">
+                        {{ veiculo.cor }}
+                        </span>
+                      </td>
+
+                      <td>
+                        <span class="badge badge-dot mr-4">
+                        {{ veiculo.modelo }}
+                        </span>
+                      </td>
+                      
+                      <td>
+                        <span class="badge badge-dot mr-4">
+                        {{ veiculo.ano }}
+                        </span>
+                      </td>
+
+                      <td>
+                        {{ veiculo.placa }}
+                      </td>
+
+                      <td>
+                        <a href="{% url 'editar-usuario' veiculo.proprietario.id %}">{{ veiculo.proprietario }}</a>
+                      </td>
+
+                      <td>
+                        {{ veiculo.data|date:"d/m/y - H:i" }}
+                      </td>
+
+                      <td>
+                        {{ veiculo.atualizacao|date:"d/m/y - H:i" }}
+                      </td>
+
+                      <td>
+                        {{ veiculo.status|capfirst }}
+                      </td>
+                    
+                      <td class="text-right">
+                        <div class="dropdown">
+                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" href="{% url 'editar-veiculo' veiculo.id %}">Editar</a>
+                            <a class="dropdown-item" href="{% url 'deletar-veiculo' veiculo.id %}">Remover</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+          {% if veiculos.has_other_pages %}
+            <div class="card-footer py-4">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                {% if veiculos.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{veiculos.previous_page_number}}"  tabindex="-1">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  {% endif %}
+                  
+                  {% for page in custom_range %}
+                  {% if page == veiculos.number %}
+                  <li class="page-item active">
+                    <a class="page-link" href="?page={{page}}" data-page="{{page}}">{{page}}</a>
+                  </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{page}}" data-page="{{page}}">{{page}}<span class="sr-only">(current)</span></a>
+                  </li>
+                  {% endif %}
+                  {% endfor %}
+
+                  {% if veiculos.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{veiculos.next_page_number}}">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+
+<script type="text/javascript">
+  // get search form and page links
+  let searchForm = document.getElementById('searchForm')
+  let pageLinks = document.getElementsByClassName('page-link')
+
+  // ensure search form exists
+  if (searchForm){
+    for (let i = 0; pageLinks.length > i; i++){
+      pageLinks[i].addEventListener('click', function (e) {
+        e.preventDefault()
+
+        // get the data attribute
+        let page = this.dataset.page
+
+        // add hidden search input to form
+        searchForm.innerHTML += `<input value=${page} name="page" hidden/>`
+
+        // submit form
+        searchForm.submit()
+      })
+    }
+  }
+</script>
+
+{% block javascripts %}{% endblock javascripts %}

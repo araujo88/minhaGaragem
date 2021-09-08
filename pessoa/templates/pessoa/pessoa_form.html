@@ -1,0 +1,86 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Cadastrar usuário {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" 
+         style="min-height: 100px; background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+      </div>
+    </div>
+        <div class="container-fluid mt--7">
+            
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                        <h3 class="mb-0">Usuário</h3>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card-body">
+
+                    <form class="form" method="POST">
+                        {% csrf_token %}
+                        <h6 class="heading-small text-muted mb-4">Informações do usuário</h6>
+
+                        <div class="pl-lg-4">
+                        <!-- Input:Text -->
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="formInput#text">{{form.nome.label}}</label>
+                                {{ form.nome }}
+                            </div>
+                            <span class="text-error">{{ form.nome.errors }}</span>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="formInput#text">{{form.documento.label}}</label>
+                                {{ form.documento }}
+                            </div>
+                            <span class="text-error">{{ form.documento.errors }}</span>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="formInput#text">{{form.email.label}}</label>
+                                {{ form.email }}
+                            </div>
+                            <span class="text-error">{{ form.email.errors }}</span>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="formInput#text">{{form.telefone.label}}</label>
+                                {{ form.telefone }}
+                            </div>
+                            <span class="text-error">{{ form.telefone.errors }}</span>
+                        </div>
+                        
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Salvar" />
+                </form>
+
+
+                        </div>
+                        <hr class="my-4" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

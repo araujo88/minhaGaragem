@@ -1,0 +1,176 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Usuários {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+
+
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <form method="get" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            <div class="form-group mb-0">
+                <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
+                        <input class="form-control" placeholder="Procurar usuário" type="text" id="formInput#search" name="search_query" value="{{search_query}}">
+                </div>
+            </div>
+          </form>
+          <br>
+          <div class="card shadow">
+           <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Usuários</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a href={% url 'criar-usuario' %} class="btn btn-sm btn-primary">Cadastrar usuário</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Documento de identificação</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Data de cadastro</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for pessoa in pessoas %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{ pessoa.nome }}</span>
+                        </div>
+                      </div>
+                    </th>
+
+                     <td>
+                      {{ pessoa.documento }}
+                    </td>
+
+                     <td>
+                      {{ pessoa.telefone }}
+                    </td>
+
+                     <td>
+                      {{ pessoa.email }}
+                    </td>
+
+                     <td>
+                      {{ pessoa.data|date:"d/m/y - H:i" }}
+                    </td>
+                   
+                    <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" href="{% url 'editar-usuario' pessoa.id %}">Editar</a>
+                          <a class="dropdown-item" href="{% url 'deletar-usuario' pessoa.id %}">Remover</a>
+                        </div>
+                      </div>
+                    </td>
+
+                  {% endfor %}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {% if pessoas.has_other_pages %}
+            <div class="card-footer py-4">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                {% if pessoas.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{pessoas.previous_page_number}}"  tabindex="-1">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  {% endif %}
+                  
+                  {% for page in custom_range %}
+                  {% if page == pessoas.number %}
+                  <li class="page-item active">
+                    <a class="page-link" href="?page={{page}}" data-page="{{page}}">{{page}}</a>
+                  </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{page}}" data-page="{{page}}">{{page}}<span class="sr-only">(current)</span></a>
+                  </li>
+                  {% endif %}
+                  {% endfor %}
+
+                  {% if pessoas.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{pessoas.next_page_number}}">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+
+<script type="text/javascript">
+  // get search form and page links
+  let searchForm = document.getElementById('searchForm')
+  let pageLinks = document.getElementsByClassName('page-link')
+
+  // ensure search form exists
+  if (searchForm){
+    for (let i = 0; pageLinks.length > i; i++){
+      pageLinks[i].addEventListener('click', function (e) {
+        e.preventDefault()
+
+        // get the data attribute
+        let page = this.dataset.page
+
+        // add hidden search input to form
+        searchForm.innerHTML += `<input value=${page} name="page" hidden/>`
+
+        // submit form
+        searchForm.submit()
+      })
+    }
+  }
+</script>
+
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Deletar usuário {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" 
+         style="min-height: 100px; background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+      </div>
+    </div>
+        <div class="container-fluid mt--7">
+            
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                        <h3 class="mb-0">Deletar usuário</h3>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card-body">
+
+                    <form class="form" method="POST">
+                        {% csrf_token %}
+
+                        <div class="pl-lg-4">
+                        <!-- Input:Text -->
+
+                    <p>Você tem certeza que quer deletar o usuário "{{object}}"?</p>
+
+                    <a href="{% url 'pessoas' %}">Voltar</a>
+                        
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Confirmar" />
+                </form>
+
+
+                        </div>
+                        <hr class="my-4" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,132 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Cadastrar veículo {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" 
+         style="min-height: 100px; background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+      </div>
+    </div>
+        <div class="container-fluid mt--7">
+            
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                        <h3 class="mb-0">Veículo</h3>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card-body">
+
+                    <form class="form" method="POST">
+                        {% csrf_token %}
+                        <h6 class="heading-small text-muted mb-4">Informações do veículo</h6>
+
+                        <div class="pl-lg-4">
+
+                        <table class="table align-items-center table-flush">
+                        <!-- Input:Text -->
+
+                        <tr>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.proprietario.label}}</label>
+                                        {{ form.proprietario }}
+                                    </div>
+                                    <span class="text-error">{{ form.proprietario.errors }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.tipo.label}}</label>
+                                        {{ form.tipo }}
+                                    </div>
+                                    <span class="text-error">{{ form.tipo.errors }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.cor.label}}</label>
+                                        {{ form.cor }}
+                                    </div>
+                                    <span class="text-error">{{ form.cor.errors }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.modelo.label}}</label>
+                                        {{ form.modelo }}
+                                    </div>
+                                    <span class="text-error">{{ form.modelo.errors }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.ano.label}}</label>
+                                        {{ form.ano }}
+                                    </div>
+                                    <span class="text-error">{{ form.ano.errors }}</span>
+                                </div> 
+                            </td>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.placa.label}}</label>
+                                        {{ form.placa }}
+                                    </div>
+                                    <span class="text-error">{{ form.placa.errors }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="formInput#text">{{form.status.label}}</label>
+                                        {{ form.status }}
+                                    </div>
+                                    <span class="text-error">{{ form.status.errors }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Salvar" />
+                            </td>
+                        </tr>
+
+                    </table>  
+                </form>
+
+
+                        </div>
+                        <hr class="my-4" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
