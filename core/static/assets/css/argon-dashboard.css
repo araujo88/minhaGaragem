@@ -658,7 +658,6 @@ pre code {
 .col-1,
 .col-2,
 .col-3,
-.col-4,
 .col-5,
 .col-6,
 .col-7,
@@ -730,6 +729,14 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+}
+
+.col-4 {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .col {
